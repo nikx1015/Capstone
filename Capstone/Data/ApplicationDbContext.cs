@@ -15,5 +15,7 @@ namespace Capstone.Data
         {
     }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Capstone.Models.Game> Game { get; set; }
+        public DbSet<Capstone.Models.Tag> Tag { get; set; }
     }
 }
