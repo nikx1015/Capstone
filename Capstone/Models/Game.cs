@@ -9,7 +9,7 @@ namespace Capstone.Models
     public class Game
     {
         [Required]
-        public int Id { get; set; }
+        public int GameId { get; set; }
 
         [Required]
         public string Title { get; set; }

@@ -34,7 +34,7 @@ namespace Capstone.Controllers
             }
 
             var tag = await _context.Tag
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.TagId == id);
             if (tag == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] Tag tag)
         {
-            if (id != tag.Id)
+            if (id != tag.TagId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TagExists(tag.Id))
+                    if (!TagExists(tag.TagId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace Capstone.Controllers
             }
 
             var tag = await _context.Tag
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.TagId == id);
             if (tag == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace Capstone.Controllers
 
         private bool TagExists(int id)
         {
-            return _context.Tag.Any(e => e.Id == id);
+            return _context.Tag.Any(e => e.TagId == id);
         }
     }
 }
