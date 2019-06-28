@@ -56,6 +56,8 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title")] Tag tag)
         {
+            ModelState.Remove("tag.User");
+            ModelState.Remove("tag.UserId");
             if (ModelState.IsValid)
             {
                 _context.Add(tag);

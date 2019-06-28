@@ -33,6 +33,12 @@ namespace Capstone.Models
 
         public bool HavePlayed { get; set; }
 
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public ApplicationUser User { get; set; }
+
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }
