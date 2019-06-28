@@ -9,7 +9,7 @@ namespace Capstone.Models
     public class Tag
     {
         [Required]
-        public int Id { get; set; }
+        public int TagId { get; set; }
 
         [Required]
         public int Title { get; set; }

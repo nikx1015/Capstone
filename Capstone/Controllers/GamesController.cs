@@ -34,7 +34,7 @@ namespace Capstone.Controllers
             }
 
             var game = await _context.Game
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.GameId == id);
             if (game == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
         {
-            if (id != game.Id)
+            if (id != game.GameId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GameExists(game.Id))
+                    if (!GameExists(game.GameId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace Capstone.Controllers
             }
 
             var game = await _context.Game
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.GameId == id);
             if (game == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace Capstone.Controllers
 
         private bool GameExists(int id)
         {
-            return _context.Game.Any(e => e.Id == id);
+            return _context.Game.Any(e => e.GameId == id);
         }
     }
 }
