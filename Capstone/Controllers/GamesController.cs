@@ -32,7 +32,7 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                games = games.Where(g => g.Title.Contains(searchQuery) || g.Genre.Contains(searchQuery));
+                games = games.Where(g => g.Title.Contains(searchQuery) || g.Genre.Contains(searchQuery) || g.Platform.Contains(searchQuery) || g.NumberOfPlayers.Contains(searchQuery));
             }
 
             ApplicationUser user = await GetCurrentUserAsync();
@@ -70,16 +70,20 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
+        public async Task<IActionResult> Create([Bind("Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
         {
-            ModelState.Remove("game.User");
-            ModelState.Remove("game.UserId");
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+
+            var currentUser = await GetCurrentUserAsync();
+            game.UserId = currentUser.Id;
+
 
             if (ModelState.IsValid)
             {
                 _context.Add(game);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = game.GameId });
             }
             return View(game);
         }
@@ -105,12 +109,17 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
+        public async Task<IActionResult> Edit(int GameId, [Bind("GameId, Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
         {
-            if (id != game.GameId)
+            if (GameId != game.GameId)
             {
                 return NotFound();
             }
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+
+            var currentUser = await GetCurrentUserAsync();
+            game.UserId = currentUser.Id;
 
             if (ModelState.IsValid)
             {
