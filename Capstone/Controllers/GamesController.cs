@@ -52,6 +52,10 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
             {
                 games = games.Where(g => g.Genre.Contains(gameGenre));
             }
+            if(!string.IsNullOrEmpty(gamePlatform))
+            {
+                games = games.Where(g => g.Platform.Contains(gamePlatform));
+            }
 
             ApplicationUser user = await GetCurrentUserAsync();
             var applicationDbContext = _context.Game.Include(g => g.User);
