@@ -11,8 +11,9 @@
 </p>
 <form>
     <input type="text" name="searchQuery" />
-    Genre: @Html.DropDownList("gameGenre", null, "--Select Genre--")
-    Platform: @Html.DropDownList("gamePlatform", null, "--Select Platform--")
+    Genre: @Html.DropDownList("gameGenre", null, "--Genre--")
+    Platform: @Html.DropDownList("gamePlatform", null, "--Platform--")
+    NumberofPlayers: @Html.DropDownList("gamePlayers", null, "--Number Of Players--")
     <button type="submit">Search</button>
 </form>
 

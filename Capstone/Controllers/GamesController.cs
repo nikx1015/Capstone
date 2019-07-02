@@ -26,7 +26,7 @@ namespace Capstone.Controllers
 private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Games
-        public async Task<IActionResult> Index(string searchQuery, string gameGenre, string gamePlatform)
+        public async Task<IActionResult> Index(string searchQuery, string gameGenre, string gamePlatform, string gamePlayers)
         {
             var genreList = new List<string>();
             var genreQuery = from g in _context.Game.Include(g => g.User) select g.Genre;
@@ -37,6 +37,11 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
             var platformQuery = from g in _context.Game.Include(g => g.User) select g.Platform;
             platformList.AddRange(platformQuery.Distinct());
             ViewBag.gamePlatform = new SelectList(platformList);
+
+            var numberPlayersList = new List<string>();
+            var playerQuery = from g in _context.Game.Include(g => g.User) select g.NumberOfPlayers;
+            numberPlayersList.AddRange(playerQuery.Distinct());
+            ViewBag.gamePlayers = new SelectList(numberPlayersList);
 
             //SelectList genreList0 = (genreList);
             // genreList = genreList0;
@@ -55,6 +60,10 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
             if(!string.IsNullOrEmpty(gamePlatform))
             {
                 games = games.Where(g => g.Platform.Contains(gamePlatform));
+            }
+            if(!string.IsNullOrEmpty(gamePlayers))
+            {
+                games = games.Where(g => g.NumberOfPlayers.Contains(gamePlayers));
             }
 
             ApplicationUser user = await GetCurrentUserAsync();
