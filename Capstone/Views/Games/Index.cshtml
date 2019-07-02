@@ -11,8 +11,11 @@
 </p>
 <form>
     <input type="text" name="searchQuery" />
+    Genre: @Html.DropDownList("gameGenre", null, "--Select Genre--")
+    Platform: @Html.DropDownList("gamePlatform", null, "--Select Platform--")
     <button type="submit">Search</button>
 </form>
+
 <table class="table">
     <thead>
         <tr>

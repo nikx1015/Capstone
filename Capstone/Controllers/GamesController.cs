@@ -9,6 +9,7 @@ using Capstone.Data;
 using Capstone.Models;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace Capstone.Controllers
 {
     public class GamesController : Controller
@@ -25,14 +26,31 @@ namespace Capstone.Controllers
 private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Games
-        public async Task<IActionResult> Index(string searchQuery)
+        public async Task<IActionResult> Index(string searchQuery, string gameGenre, string gamePlatform)
         {
+            var genreList = new List<string>();
+            var genreQuery = from g in _context.Game.Include(g => g.User) select g.Genre;
+            genreList.AddRange(genreQuery.Distinct());
+             ViewBag.gameGenre = new SelectList(genreList);
+
+            var platformList = new List<string>();
+            var platformQuery = from g in _context.Game.Include(g => g.User) select g.Platform;
+            platformList.AddRange(platformQuery.Distinct());
+            ViewBag.gamePlatform = new SelectList(platformList);
+
+            //SelectList genreList0 = (genreList);
+            // genreList = genreList0;
+
             var games = from g in _context.Game.Include(g => g.User)
-                           select g;
+                        select g;
 
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 games = games.Where(g => g.Title.Contains(searchQuery) || g.Genre.Contains(searchQuery) || g.Platform.Contains(searchQuery) || g.NumberOfPlayers.Contains(searchQuery));
+            }
+            if(!string.IsNullOrEmpty(gameGenre))
+            {
+                games = games.Where(g => g.Genre.Contains(gameGenre));
             }
 
             ApplicationUser user = await GetCurrentUserAsync();
@@ -176,6 +194,22 @@ private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync
         private bool GameExists(int id)
         {
             return _context.Game.Any(e => e.GameId == id);
+        }
+
+        //Add Game To List
+        [HttpGet]
+
+        public async Task<IActionResult> AddGameToList([FromRoute]int GameId, Game game)
+        {
+            var currentUser = await GetCurrentUserAsync();
+            game.UserId = currentUser.Id;
+
+            List<Game> Games = await _context.Game.Where(g => g.UserId == currentUser.Id).ToListAsync();
+
+            _context.Add(game);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

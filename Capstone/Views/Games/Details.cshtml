@@ -61,6 +61,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.GameId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="form-group">
+        <a class="btn btn-primary"
+           asp-controller="Games" asp-action="AddGameToList" asp-route-id="@Model.GameId">
+            Add to List
+
+        </a>
+        <a asp-action="Edit" asp-route-id="@Model.GameId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
