@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20190705040238_database-seed.cs" />
     <Compile Remove="Data\Migrations\20190705040238_database-seed.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190705141740_userlist-model.cs" />
+    <Compile Remove="Data\Migrations\20190705141740_userlist-model.Designer.cs" />
   </ItemGroup>
 
 
