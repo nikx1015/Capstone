@@ -11,9 +11,9 @@
 </p>
 <form>
     <input type="text" name="searchQuery" />
-    Genre: @Html.DropDownList("gameGenre", null, "--Genre--")
-    Platform: @Html.DropDownList("gamePlatform", null, "--Platform--")
-    NumberofPlayers: @Html.DropDownList("gamePlayers", null, "--Number Of Players--")
+    @Html.DropDownList("gameGenre", null, "--Genre--")
+    @Html.DropDownList("gamePlatform", null, "--Platform--")
+    @Html.DropDownList("gamePlayers", null, "--Number Of Players--")
     <button type="submit">Search</button>
 </form>
 
@@ -27,22 +27,10 @@
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EsrbRating)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Platform)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumberOfPlayers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HavePlayed)
             </th>
             <th></th>
         </tr>
@@ -58,22 +46,10 @@
                     @Html.DisplayFor(modelItem => item.Genre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EsrbRating)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Platform)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfPlayers)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HavePlayed)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.GameId">Edit</a> |

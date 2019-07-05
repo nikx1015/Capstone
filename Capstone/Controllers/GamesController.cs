@@ -28,39 +28,44 @@ namespace Capstone.Controllers
         // GET: Games
         public async Task<IActionResult> Index(string searchQuery, string gameGenre, string gamePlatform, string gamePlayers)
         {
+
+            //adding filter for genre in dropdown list
             var genreList = new List<string>();
             var genreQuery = from g in _context.Game.Include(g => g.User) select g.Genre;
             genreList.AddRange(genreQuery.Distinct());
             ViewBag.gameGenre = new SelectList(genreList);
 
+            //adding filter for platform in dropdown list
             var platformList = new List<string>();
             var platformQuery = from g in _context.Game.Include(g => g.User) select g.Platform;
             platformList.AddRange(platformQuery.Distinct());
             ViewBag.gamePlatform = new SelectList(platformList);
 
+            //adding filter for number of players in dropdown list
             var numberPlayersList = new List<string>();
             var playerQuery = from g in _context.Game.Include(g => g.User) select g.NumberOfPlayers;
             numberPlayersList.AddRange(playerQuery.Distinct());
             ViewBag.gamePlayers = new SelectList(numberPlayersList);
 
-            //SelectList genreList0 = (genreList);
-            // genreList = genreList0;
-
             var games = from g in _context.Game.Include(g => g.User)
                         select g;
 
+            //adding search by title, genre, platform, and number of players
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 games = games.Where(g => g.Title.Contains(searchQuery) || g.Genre.Contains(searchQuery) || g.Platform.Contains(searchQuery) || g.NumberOfPlayers.Contains(searchQuery));
             }
+            //checking for filter for genre
             if (!string.IsNullOrEmpty(gameGenre))
             {
                 games = games.Where(g => g.Genre.Contains(gameGenre));
             }
+            //checking for filter for platform
             if (!string.IsNullOrEmpty(gamePlatform))
             {
                 games = games.Where(g => g.Platform.Contains(gamePlatform));
             }
+            //checking for filter for number of players
             if (!string.IsNullOrEmpty(gamePlayers))
             {
                 games = games.Where(g => g.NumberOfPlayers.Contains(gamePlayers));
