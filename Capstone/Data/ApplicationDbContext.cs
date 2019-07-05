@@ -52,7 +52,8 @@ namespace Capstone.Data
                     Platform = "Nintendo",
                     NumberOfPlayers = "Single player",
                     //ReleaseDate = 1123-19-90
-                    HavePlayed = false
+                    HavePlayed = false,
+                    UserId = user.Id
 
 
                 },
@@ -66,7 +67,9 @@ namespace Capstone.Data
                     Platform = "Playstation, Xbox",
                     NumberOfPlayers = "Single Player",
                     //ReleaseDate = ,
-                    HavePlayed = false
+                    HavePlayed = false,
+
+                    UserId = user.Id
                 }
             );
 
@@ -75,11 +78,13 @@ namespace Capstone.Data
                 new Tag()
                 {
                     TagId = 1,
+                    UserId = user.Id,
                     Title = "RPG"
                 },
                 new Tag()
                 {
                     TagId = 2,
+                    UserId = user.Id,
                     Title = "Adventure"
                 }
             );

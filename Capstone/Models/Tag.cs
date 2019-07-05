@@ -13,5 +13,11 @@ namespace Capstone.Models
 
         [Required]
         public string Title { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public ApplicationUser User { get; set; }
     }
 }
