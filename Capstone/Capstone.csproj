@@ -11,6 +11,8 @@
     <Compile Remove="Data\Migrations\20190705040238_database-seed.Designer.cs" />
     <Compile Remove="Data\Migrations\20190705141740_userlist-model.cs" />
     <Compile Remove="Data\Migrations\20190705141740_userlist-model.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190705152625_added-list-to-game-model.cs" />
+    <Compile Remove="Data\Migrations\20190705152625_added-list-to-game-model.Designer.cs" />
   </ItemGroup>
 
 

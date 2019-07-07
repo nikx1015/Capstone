@@ -18,7 +18,6 @@ namespace Capstone.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Capstone.Models.Game> Game { get; set; }
         public DbSet<Capstone.Models.Tag> Tag { get; set; }
-
         public DbSet<Capstone.Models.UserList> UserList{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -70,7 +69,6 @@ namespace Capstone.Data
                     NumberOfPlayers = "Single Player",
                     //ReleaseDate = ,
                     HavePlayed = false,
-
                     UserId = user.Id
                 }
             );

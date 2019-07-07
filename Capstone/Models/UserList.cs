@@ -10,7 +10,6 @@ namespace Capstone.Models
     {
         public int UserListId { get; set; }
 
-        [Required]
         public int GameId { get; set; }
 
         public Game game { get; set; }

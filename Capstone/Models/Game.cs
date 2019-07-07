@@ -40,5 +40,8 @@ namespace Capstone.Models
         public ApplicationUser User { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
+
+        public List<UserList> UserLists { get; set; }
+
     }
 }

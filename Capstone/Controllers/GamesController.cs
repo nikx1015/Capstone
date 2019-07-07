@@ -214,20 +214,5 @@ namespace Capstone.Controllers
             return _context.Game.Any(e => e.GameId == id);
         }
 
-        //Add Game To List
-        [HttpGet]
-
-        public async Task<IActionResult> AddGameToList([FromRoute]int GameId, Game game)
-        {
-            var currentUser = await GetCurrentUserAsync();
-            game.UserId = currentUser.Id;
-
-            List<Game> Games = await _context.Game.Where(g => g.UserId == currentUser.Id).ToListAsync();
-
-            _context.Add(game);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-
-        }
     }
 }
