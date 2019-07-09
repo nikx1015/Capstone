@@ -106,7 +106,7 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
+        public async Task<IActionResult> Create([Bind("Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase, HavePlayed")] Game game)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
@@ -145,7 +145,7 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int GameId, [Bind("GameId, Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
+        public async Task<IActionResult> Edit(int GameId, [Bind("GameId, Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase,HavePlayed")] Game game)
         {
             if (GameId != game.GameId)
             {

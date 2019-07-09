@@ -36,6 +36,9 @@ namespace Capstone.Models
         [Required]
         public string UserId { get; set; }
 
+        [DataType(DataType.Url)]
+        public string UrlToPurchase { get; set; }
+
         [Required]
         public ApplicationUser User { get; set; }
 

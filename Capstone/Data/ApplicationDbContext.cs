@@ -54,6 +54,7 @@ namespace Capstone.Data
                     NumberOfPlayers = "Single player",
                     //ReleaseDate = 1123-19-90
                     HavePlayed = false,
+                    UrlToPurchase = "https://www.gamestop.com/games/the-legend-of-zelda-ocarina-of-time/122505",
                     UserId = user.Id
 
 
@@ -69,6 +70,7 @@ namespace Capstone.Data
                     NumberOfPlayers = "Single Player",
                     //ReleaseDate = ,
                     HavePlayed = false,
+                    UrlToPurchase = "https://finalfantasyxhd.square-enix-games.com/en-us/home/#buy",
                     UserId = user.Id
                 }
             );

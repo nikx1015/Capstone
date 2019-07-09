@@ -4,14 +4,16 @@ using Capstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capstone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190708202235_changes-to-app-db")]
+    partial class changestoappdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +73,7 @@ namespace Capstone.Data.Migrations
                             ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "The Legend of Zelda: Ocarina of Time",
                             UrlToPurchase = "https://www.gamestop.com/games/the-legend-of-zelda-ocarina-of-time/122505",
-                            UserId = "668bca97-7208-412b-ae82-38b4f9265457"
+                            UserId = "0fb11a24-b178-4c59-9169-95769fb85afd"
                         },
                         new
                         {
@@ -85,7 +87,7 @@ namespace Capstone.Data.Migrations
                             ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Final Fantasy X",
                             UrlToPurchase = "https://finalfantasyxhd.square-enix-games.com/en-us/home/#buy",
-                            UserId = "668bca97-7208-412b-ae82-38b4f9265457"
+                            UserId = "0fb11a24-b178-4c59-9169-95769fb85afd"
                         });
                 });
 
@@ -116,13 +118,13 @@ namespace Capstone.Data.Migrations
                         {
                             TagId = 1,
                             Title = "RPG",
-                            UserId = "668bca97-7208-412b-ae82-38b4f9265457"
+                            UserId = "0fb11a24-b178-4c59-9169-95769fb85afd"
                         },
                         new
                         {
                             TagId = 2,
                             Title = "Adventure",
-                            UserId = "668bca97-7208-412b-ae82-38b4f9265457"
+                            UserId = "0fb11a24-b178-4c59-9169-95769fb85afd"
                         });
                 });
 
@@ -324,17 +326,17 @@ namespace Capstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "668bca97-7208-412b-ae82-38b4f9265457",
+                            Id = "0fb11a24-b178-4c59-9169-95769fb85afd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "151d1dcb-c959-4136-a14c-ff7d860101b5",
+                            ConcurrencyStamp = "1d54c6c0-b4a7-4b21-985e-b4da1a78dacd",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBAoABIE/x63x2BLuRHWtH2wQ54O8cxJGXgUyg/eq67tE+F5IvEG+RqGkkWH420Ovg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENLPUFjyRhvPx0qVhFFezZUSd8WGwvrlTkRaypZq1amdh1AC2NMPdJxlH2dPBwlleQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bad04780-9415-4b9a-8453-869c7ddf04ec",
+                            SecurityStamp = "92a83dc8-7599-4c6a-b4a0-c57df1f60b3c",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
                             FirstName = "admin",

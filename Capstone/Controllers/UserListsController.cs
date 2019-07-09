@@ -52,6 +52,10 @@ namespace Capstone.Controllers
         // GET: UserLists/Create
         public IActionResult Create()
         {
+          //  var GameList = new List<string>();
+          //  var ListGames = from g in _context.Game.Include(g => g.User).Include(g => g.GameId).Include(g => g.Title)
+                       //     select g.Title;
+            //ViewBag.gamesList = new List<string>(GameList);
             ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Title");
             return View();
         }
@@ -69,6 +73,13 @@ namespace Capstone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+         //   var GameList = new List<string>();
+          //  var ListGames = from g in _context.Game.Include(g => g.User).Include(g => g.GameId).Include(g => g.Title)
+         //                   select g.Title;
+          //  ViewBag.gamesList = new List<string>(GameList);
+
+          //  List<UserList> GameList = _context.UserList.ToListAsync();
             ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Title", userList.GameId);
             return View(userList);
         }
