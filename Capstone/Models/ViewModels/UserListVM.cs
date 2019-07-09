@@ -12,6 +12,6 @@ namespace Capstone.Models.ViewModels
 
         public Game game { get; set; }
 
-        public SelectList SavedGameList { get; set; }
+        public SelectList Games { get; set; }
     }
 }

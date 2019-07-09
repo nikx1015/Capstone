@@ -21,22 +21,28 @@ namespace Capstone.Models
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "ESRB Rating")]
         public string EsrbRating { get; set; }
 
         [Required]
         public string Platform { get; set; }
 
         [Required]
+        [Display(Name = "Number of Players")]
         public string NumberOfPlayers { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
+        [Display(Name = "Have Played This Game?")]
         public bool HavePlayed { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
         [DataType(DataType.Url)]
+        [Display(Name = "Link To Purchase")]
         public string UrlToPurchase { get; set; }
 
         [Required]
