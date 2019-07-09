@@ -26,7 +26,9 @@ namespace Capstone.Controllers
         // GET: UserLists
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.UserList.Include(u => u.game);
+            ApplicationUser user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.UserList.Include(u => u.game)
+                .Where(userList=> userList.game.UserId == user.Id);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -52,10 +54,7 @@ namespace Capstone.Controllers
         // GET: UserLists/Create
         public IActionResult Create()
         {
-          //  var GameList = new List<string>();
-          //  var ListGames = from g in _context.Game.Include(g => g.User).Include(g => g.GameId).Include(g => g.Title)
-                       //     select g.Title;
-            //ViewBag.gamesList = new List<string>(GameList);
+           // var selectListItems = 
             ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Title");
             return View();
         }
@@ -67,19 +66,18 @@ namespace Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserListId,GameId")] UserList userList)
         {
+         //   ModelState.Remove("User");
+         //   ModelState.Remove("UserId");
+
+            var currentUser = await GetCurrentUserAsync();
+        //    userList.game.UserId = currentUser.Id;
             if (ModelState.IsValid)
             {
                 _context.Add(userList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-         //   var GameList = new List<string>();
-          //  var ListGames = from g in _context.Game.Include(g => g.User).Include(g => g.GameId).Include(g => g.Title)
-         //                   select g.Title;
-          //  ViewBag.gamesList = new List<string>(GameList);
-
-          //  List<UserList> GameList = _context.UserList.ToListAsync();
+           
             ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Title", userList.GameId);
             return View(userList);
         }
