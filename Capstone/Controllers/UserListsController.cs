@@ -29,6 +29,12 @@ namespace Capstone.Controllers
             ApplicationUser user = await GetCurrentUserAsync();
             var applicationDbContext = _context.UserList.Include(u => u.game)
                 .Where(userList=> userList.game.UserId == user.Id);
+         //   var gameList = _context.UserList.Include(u => u.game)
+         //       .Where(userList => userList.game.UserId == user.Id);
+        //    var gameArray = gameList.ToList();
+         //   ViewBag.gameCount = gameArray.Count();
+
+
             return View(await applicationDbContext.ToListAsync());
         }
 
