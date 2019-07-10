@@ -13,7 +13,5 @@ namespace Capstone.Models
         public int GameId { get; set; }
 
         public Game game { get; set; }
-
-       //public List<UserList> GameList {get; set;}
     }
 }
