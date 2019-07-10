@@ -6,15 +6,6 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Migrations\20190705040238_database-seed.cs" />
-    <Compile Remove="Data\Migrations\20190705040238_database-seed.Designer.cs" />
-    <Compile Remove="Data\Migrations\20190705141740_userlist-model.cs" />
-    <Compile Remove="Data\Migrations\20190705141740_userlist-model.Designer.cs" />
-    <Compile Remove="Data\Migrations\20190705152625_added-list-to-game-model.cs" />
-    <Compile Remove="Data\Migrations\20190705152625_added-list-to-game-model.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -24,6 +15,10 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.1.0-preview1-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

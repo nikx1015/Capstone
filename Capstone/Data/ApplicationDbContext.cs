@@ -23,9 +23,9 @@ namespace Capstone.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-        
-        // Create a new user for Identity Framework
-        ApplicationUser user = new ApplicationUser
+
+            // Create a new user for Identity Framework
+            ApplicationUser user = new ApplicationUser
             {
                 FirstName = "admin",
                 LastName = "admin",

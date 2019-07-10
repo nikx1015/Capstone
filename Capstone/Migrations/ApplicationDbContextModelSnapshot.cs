@@ -4,16 +4,14 @@ using Capstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Capstone.Data.Migrations
+namespace Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190628142958_seed-database")]
-    partial class seeddatabase
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +24,6 @@ namespace Capstone.Data.Migrations
                     b.Property<int>("GameId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -51,9 +47,14 @@ namespace Capstone.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
+                    b.Property<string>("UrlToPurchase");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
                     b.HasKey("GameId");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Game");
 
@@ -61,26 +62,30 @@ namespace Capstone.Data.Migrations
                         new
                         {
                             GameId = 1,
-                            Description = "The player plays as a character named Link in the land of Hyrule. The player is on a quest to stop Ganondorf from obtaining the triforce, a sacred relic. Link travels through time and completes dungeons to awaken the sages who can seal away the evil.",
+                            Description = "The player plays as a character named Link in the land of Hyrule. The player is on a quest to stop Ganondorf from obtaining the triforce, a sacred relic. Link travels through time and completes dungeons to awaken the sages who can seal away evil.",
                             EsrbRating = "E",
                             Genre = "action-adventure",
                             HavePlayed = false,
                             NumberOfPlayers = "Single player",
                             Platform = "Nintendo",
                             ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "The Legend of Zelda: Ocarina of Time"
+                            Title = "The Legend of Zelda: Ocarina of Time",
+                            UrlToPurchase = "https://www.gamestop.com/games/the-legend-of-zelda-ocarina-of-time/122505",
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         },
                         new
                         {
                             GameId = 2,
-                            Description = "The player plays as Tidus who ends up in a place called Spira after his home is destroyed by a monster known as Sin. There are 7 possible characters in your group that you may switch between, all with different skills and purposes.",
+                            Description = "The player plays as Tidus who ends up in a place called Spira after his home is destroyed by a monster known as Sin. There are 7 possible characters in your group that you may switch between, all who have different skills and purposes.",
                             EsrbRating = "T",
                             Genre = "RPG",
                             HavePlayed = false,
                             NumberOfPlayers = "Single Player",
                             Platform = "Playstation, Xbox",
                             ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Final Fantasy X"
+                            Title = "Final Fantasy X",
+                            UrlToPurchase = "https://finalfantasyxhd.square-enix-games.com/en-us/home/#buy",
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         });
                 });
 
@@ -95,9 +100,14 @@ namespace Capstone.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
                     b.HasKey("TagId");
 
                     b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tag");
 
@@ -105,13 +115,34 @@ namespace Capstone.Data.Migrations
                         new
                         {
                             TagId = 1,
-                            Title = "RPG"
+                            Title = "RPG",
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         },
                         new
                         {
                             TagId = 2,
-                            Title = "Adventure"
+                            Title = "Adventure",
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         });
+                });
+
+            modelBuilder.Entity("Capstone.Models.UserList", b =>
+                {
+                    b.Property<int>("UserListId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GameId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UserListId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -297,17 +328,17 @@ namespace Capstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "170095b4-79e5-4653-9b03-ece90dbd7ca8",
+                            Id = "3e48b88f-abaf-4609-82d1-bdc5995e806b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "604cd9d4-4332-4261-9377-36a6d3a8f5fb",
+                            ConcurrencyStamp = "c2e1b6b0-7779-4a0a-81ed-09bd692249f0",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELlbNKj8na1hFCQ5/zuIqNAFpvkBUulm6f5QFsQtdDcUTBP5SPzaQk65M636lknKew==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMnZmGnhweSQzWEwMUJgZhMGKcvLI7DU2S3igsiUXLOWEGyAWpBV6JHDq0jW4E13tw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "779484fe-64ff-4266-8a0b-c3564c9bf657",
+                            SecurityStamp = "52774e3b-aa08-4c8a-a832-c7fab6f00b43",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
                             FirstName = "admin",
@@ -317,9 +348,10 @@ namespace Capstone.Data.Migrations
 
             modelBuilder.Entity("Capstone.Models.Game", b =>
                 {
-                    b.HasOne("Capstone.Models.ApplicationUser")
+                    b.HasOne("Capstone.Models.ApplicationUser", "User")
                         .WithMany("Games")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Capstone.Models.Tag", b =>
@@ -327,6 +359,23 @@ namespace Capstone.Data.Migrations
                     b.HasOne("Capstone.Models.Game")
                         .WithMany("Tags")
                         .HasForeignKey("GameId");
+
+                    b.HasOne("Capstone.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Capstone.Models.UserList", b =>
+                {
+                    b.HasOne("Capstone.Models.Game", "game")
+                        .WithMany("UserLists")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Capstone.Data.Migrations
+namespace Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190705041218_adding-user")]
-    partial class addinguser
+    [Migration("20190710174703_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,8 @@ namespace Capstone.Data.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
+                    b.Property<string>("UrlToPurchase");
+
                     b.Property<string>("UserId")
                         .IsRequired();
 
@@ -62,7 +64,7 @@ namespace Capstone.Data.Migrations
                         new
                         {
                             GameId = 1,
-                            Description = "The player plays as a character named Link in the land of Hyrule. The player is on a quest to stop Ganondorf from obtaining the triforce, a sacred relic. Link travels through time and completes dungeons to awaken the sages who can seal away the evil.",
+                            Description = "The player plays as a character named Link in the land of Hyrule. The player is on a quest to stop Ganondorf from obtaining the triforce, a sacred relic. Link travels through time and completes dungeons to awaken the sages who can seal away evil.",
                             EsrbRating = "E",
                             Genre = "action-adventure",
                             HavePlayed = false,
@@ -70,12 +72,13 @@ namespace Capstone.Data.Migrations
                             Platform = "Nintendo",
                             ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "The Legend of Zelda: Ocarina of Time",
-                            UserId = "a3f370b2-a703-4c5c-b785-7d0ab4a28635"
+                            UrlToPurchase = "https://www.gamestop.com/games/the-legend-of-zelda-ocarina-of-time/122505",
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         },
                         new
                         {
                             GameId = 2,
-                            Description = "The player plays as Tidus who ends up in a place called Spira after his home is destroyed by a monster known as Sin. There are 7 possible characters in your group that you may switch between, all with different skills and purposes.",
+                            Description = "The player plays as Tidus who ends up in a place called Spira after his home is destroyed by a monster known as Sin. There are 7 possible characters in your group that you may switch between, all who have different skills and purposes.",
                             EsrbRating = "T",
                             Genre = "RPG",
                             HavePlayed = false,
@@ -83,7 +86,8 @@ namespace Capstone.Data.Migrations
                             Platform = "Playstation, Xbox",
                             ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Final Fantasy X",
-                            UserId = "a3f370b2-a703-4c5c-b785-7d0ab4a28635"
+                            UrlToPurchase = "https://finalfantasyxhd.square-enix-games.com/en-us/home/#buy",
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         });
                 });
 
@@ -114,14 +118,33 @@ namespace Capstone.Data.Migrations
                         {
                             TagId = 1,
                             Title = "RPG",
-                            UserId = "a3f370b2-a703-4c5c-b785-7d0ab4a28635"
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         },
                         new
                         {
                             TagId = 2,
                             Title = "Adventure",
-                            UserId = "a3f370b2-a703-4c5c-b785-7d0ab4a28635"
+                            UserId = "3e48b88f-abaf-4609-82d1-bdc5995e806b"
                         });
+                });
+
+            modelBuilder.Entity("Capstone.Models.UserList", b =>
+                {
+                    b.Property<int>("UserListId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GameId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UserListId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -307,17 +330,17 @@ namespace Capstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a3f370b2-a703-4c5c-b785-7d0ab4a28635",
+                            Id = "3e48b88f-abaf-4609-82d1-bdc5995e806b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9fccb5b8-3811-4d98-aafb-ab0794851871",
+                            ConcurrencyStamp = "c2e1b6b0-7779-4a0a-81ed-09bd692249f0",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENa/usMMH0xIDNRLLUrCcCPgAXGq+vOSDe9u0s9rsbZB6W6l5NqP7vEZ0Q+5zCAU9Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMnZmGnhweSQzWEwMUJgZhMGKcvLI7DU2S3igsiUXLOWEGyAWpBV6JHDq0jW4E13tw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4793b0e7-7c3e-4e3b-b558-ed59ae0b2e21",
+                            SecurityStamp = "52774e3b-aa08-4c8a-a832-c7fab6f00b43",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
                             FirstName = "admin",
@@ -343,6 +366,18 @@ namespace Capstone.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Capstone.Models.UserList", b =>
+                {
+                    b.HasOne("Capstone.Models.Game", "game")
+                        .WithMany("UserLists")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Capstone.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

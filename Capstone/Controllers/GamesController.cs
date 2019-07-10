@@ -96,8 +96,9 @@ namespace Capstone.Controllers
         }
 
         // GET: Games/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var currentUser = await GetCurrentUserAsync();
             return View();
         }
 

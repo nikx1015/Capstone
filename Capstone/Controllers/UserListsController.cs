@@ -28,12 +28,7 @@ namespace Capstone.Controllers
         {
             ApplicationUser user = await GetCurrentUserAsync();
             var applicationDbContext = _context.UserList.Include(u => u.game)
-                .Where(userList=> userList.game.UserId == user.Id);
-         //   var gameList = _context.UserList.Include(u => u.game)
-         //       .Where(userList => userList.game.UserId == user.Id);
-        //    var gameArray = gameList.ToList();
-         //   ViewBag.gameCount = gameArray.Count();
-
+                .Where(userList=> userList.UserId == user.Id);
 
             return View(await applicationDbContext.ToListAsync());
         }
@@ -60,7 +55,6 @@ namespace Capstone.Controllers
         // GET: UserLists/Create
         public IActionResult Create()
         {
-           // var selectListItems = 
             ViewData["GameId"] = new SelectList(_context.Game, "GameId", "Title");
             return View();
         }
@@ -70,15 +64,15 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserListId,GameId")] UserList userList)
+        public async Task<IActionResult> Create([Bind("UserListId,GameId,UserId")] UserList userList)
         {
-         //   ModelState.Remove("User");
-         //   ModelState.Remove("UserId");
+          ModelState.Remove("User");
+          ModelState.Remove("UserId");
 
-            var currentUser = await GetCurrentUserAsync();
-        //    userList.game.UserId = currentUser.Id;
             if (ModelState.IsValid)
             {
+                var currentUser = await GetCurrentUserAsync();
+                userList.UserId = currentUser.Id;
                 _context.Add(userList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
