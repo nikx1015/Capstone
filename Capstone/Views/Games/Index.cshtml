@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form>
+    <input type="text" name="searchQuery" />
+    @Html.DropDownList("gameGenre", null, "--Genre--")
+    @Html.DropDownList("gamePlatform", null, "--Platform--")
+    @Html.DropDownList("gamePlayers", null, "--Number Of Players--")
+    <button type="submit">Search</button>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -19,59 +27,36 @@
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EsrbRating)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Platform)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumberOfPlayers)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HavePlayed)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EsrbRating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Platform)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberOfPlayers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HavePlayed)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GameId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GameId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GameId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Platform)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfPlayers)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.GameId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.GameId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.GameId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

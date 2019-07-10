@@ -7,22 +7,74 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Capstone.Data;
 using Capstone.Models;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace Capstone.Controllers
 {
     public class GamesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
         // GET: Games
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchQuery, string gameGenre, string gamePlatform, string gamePlayers)
         {
-            return View(await _context.Game.ToListAsync());
+
+            //adding filter for genre in dropdown list
+            var genreList = new List<string>();
+            var genreQuery = from g in _context.Game.Include(g => g.User) select g.Genre;
+            genreList.AddRange(genreQuery.Distinct());
+            ViewBag.gameGenre = new SelectList(genreList);
+
+            //adding filter for platform in dropdown list
+            var platformList = new List<string>();
+            var platformQuery = from g in _context.Game.Include(g => g.User) select g.Platform;
+            platformList.AddRange(platformQuery.Distinct());
+            ViewBag.gamePlatform = new SelectList(platformList);
+
+            //adding filter for number of players in dropdown list
+            var numberPlayersList = new List<string>();
+            var playerQuery = from g in _context.Game.Include(g => g.User) select g.NumberOfPlayers;
+            numberPlayersList.AddRange(playerQuery.Distinct());
+            ViewBag.gamePlayers = new SelectList(numberPlayersList);
+
+            var games = from g in _context.Game.Include(g => g.User)
+                        select g;
+
+            //adding search by title, genre, platform, and number of players
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                games = games.Where(g => g.Title.Contains(searchQuery) || g.Genre.Contains(searchQuery) || g.Platform.Contains(searchQuery) || g.NumberOfPlayers.Contains(searchQuery));
+            }
+            //checking for filter for genre
+            if (!string.IsNullOrEmpty(gameGenre))
+            {
+                games = games.Where(g => g.Genre.Contains(gameGenre));
+            }
+            //checking for filter for platform
+            if (!string.IsNullOrEmpty(gamePlatform))
+            {
+                games = games.Where(g => g.Platform.Contains(gamePlatform));
+            }
+            //checking for filter for number of players
+            if (!string.IsNullOrEmpty(gamePlayers))
+            {
+                games = games.Where(g => g.NumberOfPlayers.Contains(gamePlayers));
+            }
+
+            ApplicationUser user = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Game.Include(g => g.User);
+
+            return View(games);
         }
 
         // GET: Games/Details/5
@@ -44,8 +96,9 @@ namespace Capstone.Controllers
         }
 
         // GET: Games/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var currentUser = await GetCurrentUserAsync();
             return View();
         }
 
@@ -54,13 +107,20 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
+        public async Task<IActionResult> Create([Bind("Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase, HavePlayed")] Game game)
         {
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+
+            var currentUser = await GetCurrentUserAsync();
+            game.UserId = currentUser.Id;
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(game);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = game.GameId });
             }
             return View(game);
         }
@@ -86,12 +146,17 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,HavePlayed")] Game game)
+        public async Task<IActionResult> Edit(int GameId, [Bind("GameId, Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase,HavePlayed")] Game game)
         {
-            if (id != game.GameId)
+            if (GameId != game.GameId)
             {
                 return NotFound();
             }
+            ModelState.Remove("User");
+            ModelState.Remove("UserId");
+
+            var currentUser = await GetCurrentUserAsync();
+            game.UserId = currentUser.Id;
 
             if (ModelState.IsValid)
             {
@@ -149,5 +214,6 @@ namespace Capstone.Controllers
         {
             return _context.Game.Any(e => e.GameId == id);
         }
+
     }
 }

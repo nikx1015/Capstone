@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace Capstone.Models
 {
-    public class Tag
+    public class UserList
     {
         [Required]
-        public int TagId { get; set; }
+        public int UserListId { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        public int GameId { get; set; }
+
+        public Game game { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
-        [Required]
         public ApplicationUser User { get; set; }
     }
 }
