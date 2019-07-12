@@ -118,6 +118,10 @@ namespace Capstone.Controllers
 
             if (ModelState.IsValid)
             {
+                String GameImage = Convert.ToBase64String(game.GameImage);
+                //    byte[] photoBack = game.GameImage;
+
+
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", new { id = game.GameId });

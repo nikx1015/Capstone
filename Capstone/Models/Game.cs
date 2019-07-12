@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -51,6 +52,8 @@ namespace Capstone.Models
         public virtual ICollection<Tag> Tags { get; set; }
 
         public List<UserList> UserLists { get; set; }
+
+        public byte[] GameImage { get; set; }
 
     }
 }

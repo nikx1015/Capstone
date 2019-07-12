@@ -38,25 +38,31 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Platform)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfPlayers)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GameId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GameId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GameId">Delete</a>
+            </td>
+            @if (item.GameImage != null)
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Platform)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfPlayers)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.GameId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.GameId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.GameId">Delete</a>
-                </td>
-            </tr>
+                    <img src="data:image;base64,@System.Convert.ToBase64String(item.GameImage)" width="80" height="80" />
+
+                </td>}
+        </tr>
         }
     </tbody>
 </table>
