@@ -14,6 +14,7 @@ namespace Capstone.Models
         [Required]
         public int GameId { get; set; }
 
+        [Display(Name = "Saved Game Title")]
         public Game game { get; set; }
 
         [Required]

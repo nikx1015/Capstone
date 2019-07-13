@@ -13,30 +13,48 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.game)
         </dt>
-        <dd class="col-sm-10">
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.Title)
         </dd>
-        <dd class="col-sm-10">
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.game.Description)
+    </dt>
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.Description)
         </dd>
-        <dd class="col-sm-10">
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.game.NumberOfPlayers)
+    </dt>
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.NumberOfPlayers)
         </dd>
-        <dd class="col-sm-10">
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.game.Platform)
+    </dt>
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.Platform)
         </dd>
-        <dd class="col-sm-10">
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.game.ReleaseDate)
+    </dt>
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.ReleaseDate)
         </dd>
-        <dd class="col-sm-10">
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.game.EsrbRating)
+    </dt>
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.EsrbRating)
         </dd>
-        <dd class="col-sm-10">
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.game.UrlToPurchase)
+    </dt>
+<dd class="col-sm-10">
             @Html.DisplayFor(model => model.game.UrlToPurchase)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.UserListId">Edit</a> |
+
     <a asp-action="Index">Back to List</a>
 </div>
