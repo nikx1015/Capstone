@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Capstone.Data;
 using Capstone.Models;
 using Microsoft.AspNetCore.Identity;
-
+using System.IO;
 
 namespace Capstone.Controllers
 {
@@ -107,7 +107,7 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase, HavePlayed")] Game game)
+        public async Task<IActionResult> Create([Bind("Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase, HavePlayed, Image")] Game game)
         {
             ModelState.Remove("User");
             ModelState.Remove("UserId");
@@ -115,13 +115,17 @@ namespace Capstone.Controllers
             var currentUser = await GetCurrentUserAsync();
             game.UserId = currentUser.Id;
 
-
             if (ModelState.IsValid)
             {
-                String GameImage = Convert.ToBase64String(game.GameImage);
-                //    byte[] photoBack = game.GameImage;
-
-
+                if (game.Image != null)
+                {
+                    //Store the image in a temp location as it comes back from the uploader
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await game.Image.CopyToAsync(memoryStream);
+                        game.GameImage = memoryStream.ToArray();
+                    }
+                }
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", new { id = game.GameId });
@@ -150,7 +154,7 @@ namespace Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int GameId, [Bind("GameId, Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase,HavePlayed")] Game game)
+        public async Task<IActionResult> Edit(int GameId, [Bind("GameId, Title,Genre,Description,EsrbRating,Platform,NumberOfPlayers,ReleaseDate,UrlToPurchase,HavePlayed, Image")] Game game)
         {
             if (GameId != game.GameId)
             {
@@ -164,7 +168,16 @@ namespace Capstone.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                if (game.Image != null)
+                {
+                    //Store the image in a temp location as it comes back from the uploader
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await game.Image.CopyToAsync(memoryStream);
+                        game.GameImage = memoryStream.ToArray();
+                    }
+                }
+                    try
                 {
                     _context.Update(game);
                     await _context.SaveChangesAsync();

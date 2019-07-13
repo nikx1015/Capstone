@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,8 +53,12 @@ namespace Capstone.Models
         public virtual ICollection<Tag> Tags { get; set; }
 
         public List<UserList> UserLists { get; set; }
+        [Display(Name = "")]
 
         public byte[] GameImage { get; set; }
+
+        [NotMapped]
+        public IFormFile Image { get; set; }
 
     }
 }
